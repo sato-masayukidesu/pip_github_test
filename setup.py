@@ -13,10 +13,11 @@ setup(
         url              = 'https://github.com/KCF-Convoy',
         keywords         = 'sample pip github python',
         packages         = find_packages(),
-        install_requires = ["matplotlib",
+        install_requires = ["rdkit",
+                            "matplotlib",
                             "networkx",
                             "numpy",
                             "IPython",
-                            "pandas",
-                            "rdkit"],
+                            "pandas"
+                            ],
         )
