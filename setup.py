@@ -17,5 +17,6 @@ setup(
                             "networkx",
                             "numpy",
                             "IPython",
-                            "pandas"],
+                            "pandas"
+                            "rdkit"],
         )
