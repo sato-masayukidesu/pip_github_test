@@ -17,6 +17,7 @@ setup(
                             "networkx",
                             "numpy",
                             "IPython",
-                            "pandas"
+                            "pandas",
+                            "pillow"
                             ],
         )
