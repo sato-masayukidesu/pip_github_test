@@ -2,7 +2,7 @@
 from IPython.utils.io import rprint
 from rdkit import Chem
 from rdkit.Chem import AllChem
-from Compound import Compound
+from kcfconvoy.Compound import Compound
 from time import sleep
 import networkx as nx
 import os
