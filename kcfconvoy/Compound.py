@@ -228,7 +228,7 @@ class Compound:
                 self.fit2d = True
             if line[3] == "H":
                 continue
-            index_check_list.add(i - 4)
+            index_check_list.append(i - 4)
             self.graph.add_node(
                 len(self.graph.nodes()), symbol=line[3], row=line)
 
