@@ -1,3 +1,6 @@
+#!/bin/env python
+# coding: utf-8
+
 import os
 import urllib.request
 from copy import copy
@@ -75,7 +78,7 @@ class Compound:
         - get_triplets
             3連続の結合を全て取り出す。
 
-    組み込み method:
+    内部 method:
         - _input_molblock
             input系のmethodから呼ばれ，実際にself.graphなどを生成する。
         - _compute_2d_coords
@@ -182,12 +185,12 @@ class Compound:
 
         return True
 
-    def input_rdkmol(self, mol):
+    def input_rdkmol(self, rdkmol):
         """
         rdkitのmol形式を受け取り，mol形式をmolblockに直し登録する。
         """
-        self.mol = mol
-        self._input_molblock(Chem.MolToMolBlock(mol))
+        self.mol = rdkmol
+        self._input_molblock(Chem.MolToMolBlock(rdkmol))
 
         if self.fit2d is False:
             self._compute_2d_coords()
@@ -245,8 +248,8 @@ class Compound:
             if line[1] - 1 not in index_check_list:
                 continue
             replaced_list = copy(line)
-            replaced_list[0] = index_check_list.index(line[0])
-            replaced_list[1] = index_check_list.index(line[1])
+            replaced_list[0] = index_check_list.index(line[0] - 1) + 1
+            replaced_list[1] = index_check_list.index(line[1] - 1) + 1
             self.graph.add_edge(index_check_list.index(line[0] - 1),
                                 index_check_list.index(line[1] - 1),
                                 order=line[2], index=bondidx,
@@ -297,8 +300,8 @@ class Compound:
         その行のうち，0, 1番目に二次元座標が登録されている。
         それらの二次元座標をネストしたlistとして返す。
         """
-        l_nodes = list(self.graph.nodes.data("row"))
-        l_coordinates = [list(map(float, node[1][0:2])) for node in l_nodes]
+        l_rows = [node[1]["row"] for node in self.graph.nodes(data=True)]
+        l_coordinates = [list(map(float, row[0:2])) for row in l_rows]
 
         return l_coordinates
 
@@ -345,7 +348,8 @@ class Compound:
         それぞれのnodesのsymbolのlistから，
         listをsortして，重複無しで最初から0-indexのintを振り，そのintとsymbol_listとの対応を返す。
         """
-        symbol_list = [node[1] for node in self.graph.nodes.data("symbol")]
+        symbol_list = \
+            [node[1]["symbol"] for node in self.graph.nodes(data=True)]
 
         count = 0
         d_index = dict()
@@ -367,9 +371,9 @@ class Compound:
         基本的に，0-indexか1-indexかを調整するためのもの
         """
         d_label = {}
-        l_nodes = self.graph.nodes.data("row")
+        l_nodes = self.graph.nodes(data=True)
         for node in l_nodes:
-            d_label[node[0]] = str(int(node[1][12]) + start - 1)
+            d_label[node[0]] = str(int(node[1]["row"][12]) + start - 1)
 
         return d_label
 
