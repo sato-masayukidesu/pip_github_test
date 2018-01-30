@@ -13,7 +13,7 @@ class KcfMatrix:
         self.all_mat = np.array([])
         self.mask_array = np.array([])
         self.mat = np.array([])
-        
+
     def input_library(self, library):
         self.names = library.names
         self.kcfvecs = [kcf_vec(cpd) for cpd in library.cpds]
@@ -182,7 +182,7 @@ def kcf_vec(c1, levels = [0, 1, 2], attributes = [0, 1, 2, 3, 4, 5], maxsublengt
     pinpath2 = [[[cutoff, pinpath(subg, cutoff)] for subg in subgraphs]
                 for cutoff in range(4, maxsublength + 1)]
     pinpath3 = [[cutoff, pinpath(c1.graph, cutoff)] for cutoff in range(4, maxsublength + 1)]
-    
+
     ########################
     #print("pinpath1")
     #print(pinpath1)
@@ -195,7 +195,7 @@ def kcf_vec(c1, levels = [0, 1, 2], attributes = [0, 1, 2, 3, 4, 5], maxsublengt
     #        print(k)
     #    print("\n")
     ########################
-    
+
     keggatom_levels = ['atom_species', 'atom_class', 'kegg_atom']
     for lev in [keggatom_levels[level] for level in levels]:
         if 0 in attributes:
